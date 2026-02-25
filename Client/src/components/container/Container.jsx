@@ -6,7 +6,7 @@ import axios from "axios";
 const Container = () => {
   const [formData, setFormData] = useState({
     latitude: "",
-    longtitude: "",
+    longitude: "",
     subtotal: "",
   });
   const [fileName, setFileName] = useState("");
@@ -46,8 +46,10 @@ const Container = () => {
       .post(API, formData)
       .then((response) => {
         console.log(response.data);
+        console.log("Order created successfully");
       })
       .catch((error) => {
+        console.log("Error creating order");
         console.error(error);
       });
 
@@ -72,11 +74,11 @@ const Container = () => {
                 />
               </div>
               <div className="form-item">
-                <label>Longtitude:</label>
+                <label>Longitude:</label>
                 <input
-                  name="longtitude"
+                  name="longitude"
                   type="text"
-                  value={formData.longtitude}
+                  value={formData.longitude}
                   placeholder="-74.0060"
                   onChange={handleChange}
                 />

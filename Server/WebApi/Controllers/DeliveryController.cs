@@ -3,14 +3,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
+public record OrderRequest(double longitude, double latitude, double subtotal);
+
 [ApiController]
 [Route("orders")]
 public class DeliveryController(IDeliveryService deliveryService) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> CreateAsync(double longitude, double latitude, double subtotal)
+    public async Task<IActionResult> CreateAsync([FromBody] OrderRequest request)
     {
-        await deliveryService.CreateAsync(longitude, latitude, subtotal);
+        await deliveryService.CreateAsync(request.longitude, request.latitude, request.subtotal);
         return NoContent();
     }
 
