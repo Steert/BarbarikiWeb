@@ -11,7 +11,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: stretch;
-  gap: 25px;
+  gap: 40px;
 }
 
 .col {
@@ -144,7 +144,7 @@ input::placeholder {
   font-weight: bold;
   color: #1e293b;
   font-size: 20px;
-  font-family: "Arial";
+  font-family: "Arial", sans-serif;
   margin: 0;
 }
 
@@ -156,3 +156,10 @@ input::placeholder {
 }
 
 
+.error-text{
+    color: red;
+    font-weight: bold;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    margin: 0px;
+}
