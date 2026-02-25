@@ -37,6 +37,28 @@ const Container = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!fileInputRef.current.files[0]) {
+      alert("Please select a file first!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", fileInputRef.current.files[0]);
+
+    axios
+      .post(`${API}/import`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log("Import success:", response.data);
+        handleResetFile(); 
+      })
+      .catch((error) => {
+        console.error("Import error:", error);
+      });
   };
 
   const handleCreate = (event) => {
@@ -49,8 +71,7 @@ const Container = () => {
         console.log("Order created successfully");
       })
       .catch((error) => {
-        console.log("Error creating order");
-        console.error(error);
+        console.error("Error creating order", error);
       });
 
   }
@@ -141,7 +162,7 @@ const Container = () => {
                 </label>
               </div>
 
-              <button className="btn" disabled={!fileName}>
+              <button className="btn" disabled={!fileName} onClick={(e) => handleSubmit(e)}>
                 Start Import Process
               </button>
             </div>
