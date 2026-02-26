@@ -6,6 +6,23 @@ using Npgsql;
 
 namespace DataAccess;
 
+public class PagedResponse<T>
+{
+    public List<T> Items { get; set; }
+    public int TotalCount { get; set; }
+    public int PageNumber { get; set; }
+    public int PageSize { get; set; }
+    public int TotalPages => (int)Math.Ceiling((double)TotalCount / PageSize);
+
+    public PagedResponse(List<T> items, int count, int pageNumber, int pageSize)
+    {
+        Items = items;
+        TotalCount = count;
+        PageNumber = pageNumber;
+        PageSize = pageSize;
+    }
+}
+
 internal class DeliveryRepository(AppContext context) : IDeliveryRepository
 {
     public async Task CreateAsync(Delivery delivery, CancellationToken cancellationToken)
@@ -67,8 +84,17 @@ internal class DeliveryRepository(AppContext context) : IDeliveryRepository
         await writer.CompleteAsync(cancellationToken);
     }
 
-    public async Task<List<Delivery>> GetAllAsync(CancellationToken cancellationToken)
+    public async Task<PagedResponse<Delivery>> GetPagedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
-        return await context.Deliveries.ToListAsync();
+        var totalCount = await context.Deliveries.CountAsync(cancellationToken);
+        
+        var items = await context.Deliveries
+            .AsNoTracking()
+            .OrderByDescending(d => d.timestamp)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+
+        return new PagedResponse<Delivery>(items, totalCount, pageNumber, pageSize);
     }
 }
