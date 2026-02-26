@@ -1,0 +1,131 @@
+.table-header {
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+table {
+  background-color: #accbf1;
+  margin: 0px 0px 20px 0px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+th {
+  padding: 10px;
+  background-color: #d6e5f6;
+  border-radius: 5px;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+td {
+  padding: 10px;
+  background-color: #edf2f8;
+  border-radius: 5px;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0 10px 15px -3px rgba(0, 0, 0, 0.05);
+  width: 33%;
+}
+
+tr:hover td {
+  background-color: #f8fafc;
+}
+
+.pagination {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #d6e5f6;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0 10px 15px -3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+  font-family: "Arial", sans-serif;
+  font-weight: bold;
+}
+
+.manual-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #94a3b8;
+  font-family: "Arial", sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0 10px 15px -3px rgba(0, 0, 0, 0.05);
+  font-family: "Arial", sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border: none;
+}
+
+.pagination-line {
+  width: 40%;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #accbf1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px -1px rgba(0, 0, 0, 0.1),
+    0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.pagination-info {
+  color: #475569;
+  font-weight: bold;
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+}
+
+input{
+  padding: 0px 0px 5px 0px;
+}
+
+button:hover:not(:disabled) {
+  background-color: #c3cedd;
+}

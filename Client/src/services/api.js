@@ -50,3 +50,10 @@ export const checkIsNotWater = async (lat, lon) => {
   }
   return true;
 };
+
+export const getOrdersByPage = async (page) => {
+  const response = await axios.get(`${API}?pageNumber=${page}&pageSize=10`);
+
+  return response;
+
+};

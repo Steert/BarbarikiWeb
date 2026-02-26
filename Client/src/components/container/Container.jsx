@@ -1,7 +1,7 @@
 import "./Container.css";
 import ManualOrderForm from "./ManualOrderForm";
 import ImportCsvBox from "./ImportCsvBox";
-import ShowOrdersLIst from "./OrdersList";
+import OrdersTable from "./OrdersTable";
 
 const Container = () => {
   return (
@@ -16,7 +16,7 @@ const Container = () => {
       </div>
       <div className="row">
         <div className="col">
-          <ShowOrdersLIst />
+          <OrdersTable />
         </div>
       </div>
     </div>
