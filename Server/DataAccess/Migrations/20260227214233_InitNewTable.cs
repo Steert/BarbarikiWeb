@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class InitNewTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,10 +18,16 @@ namespace DataAccess.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    longitude = table.Column<float>(type: "real", nullable: false),
-                    latitude = table.Column<float>(type: "real", nullable: false),
+                    longitude = table.Column<double>(type: "double precision", nullable: false),
+                    latitude = table.Column<double>(type: "double precision", nullable: false),
                     timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    subtotal = table.Column<int>(type: "integer", nullable: false)
+                    composite_tax_rate = table.Column<double>(type: "double precision", nullable: false),
+                    state_rate = table.Column<double>(type: "double precision", nullable: false),
+                    county_rate = table.Column<double>(type: "double precision", nullable: false),
+                    special_rates = table.Column<double>(type: "double precision", nullable: false),
+                    subtotal = table.Column<double>(type: "double precision", nullable: false),
+                    tax_amount = table.Column<double>(type: "double precision", nullable: false),
+                    total_amount = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>
                 {

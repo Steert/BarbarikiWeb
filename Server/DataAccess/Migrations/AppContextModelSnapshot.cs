@@ -30,17 +30,35 @@ namespace DataAccess.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
+                    b.Property<double>("composite_tax_rate")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("county_rate")
+                        .HasColumnType("double precision");
+
                     b.Property<double>("latitude")
                         .HasColumnType("double precision");
 
                     b.Property<double>("longitude")
                         .HasColumnType("double precision");
 
+                    b.Property<double>("special_rates")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("state_rate")
+                        .HasColumnType("double precision");
+
                     b.Property<double>("subtotal")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("tax_amount")
                         .HasColumnType("double precision");
 
                     b.Property<DateTime>("timestamp")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<double>("total_amount")
+                        .HasColumnType("double precision");
 
                     b.HasKey("id");
 

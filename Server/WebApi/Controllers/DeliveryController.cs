@@ -1,5 +1,5 @@
-﻿using DataAccess.Helpers;
-using BusinessLogic;
+﻿using BusinessLogic;
+using DataAccess.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 
@@ -40,9 +40,11 @@ public class DeliveryController(IDeliveryService deliveryService) : ControllerBa
         return Ok(collection);
     }
 
-    [HttpGet("address")]
-    public async Task<bool> GetContent(double lng, double lat)
+    [HttpGet("Tax")]
+    public async Task<bool> GetTax(double longitude, double latitude)
     {
-        return await AddressHelper.ValidateLocation(lng, lat);
+        bool okay = false;
+        JurisdictionLookupService.GetJurisdiction(longitude, latitude, out okay);
+        return okay;
     }
 }

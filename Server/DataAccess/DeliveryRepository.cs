@@ -1,23 +1,43 @@
 ﻿using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
+using DataAccess.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
-using DataAccess.Helpers;
-using DataAccess.MessagesModels;
 
 namespace DataAccess;
 
 internal class DeliveryRepository(AppContext context) : IDeliveryRepository
 {
-    public async Task CreateAsync(double longitude, double latitude, double subtotal, CancellationToken cancellationToken)
+    public async Task CreateAsync(double longitude, double latitude, double subtotal,
+        CancellationToken cancellationToken)
     {
+        bool isSpecial;
+
+        double composite_tax_rate = JurisdictionLookupService.GetJurisdiction(longitude, latitude, out isSpecial);
+        double special_rate = 0;
+        double county_rate = 0;
+
+        if (isSpecial)
+        {
+            special_rate = 0.00375;
+        }
+
+        county_rate = composite_tax_rate - special_rate - 0.04;
+        double tax_amount = subtotal * composite_tax_rate;
+        double total_amount = subtotal + tax_amount;
+        
         var delivery = new Delivery
         {
             longitude = longitude,
             latitude = latitude,
             timestamp = DateTime.UtcNow,
             subtotal = subtotal,
+            composite_tax_rate = composite_tax_rate,
+            county_rate = county_rate,
+            special_rates =  special_rate,
+            tax_amount = tax_amount,
+            total_amount = total_amount,
         };
         await context.Deliveries.AddAsync(delivery, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
@@ -37,7 +57,7 @@ internal class DeliveryRepository(AppContext context) : IDeliveryRepository
         await connection.OpenAsync(cancellationToken);
 
         using var writer = connection.BeginBinaryImport(
-            "COPY \"Deliveries\" (longitude, latitude, subtotal, timestamp) FROM STDIN (FORMAT BINARY)");
+            "COPY \"Deliveries\" (longitude, latitude, subtotal, timestamp, composite_tax_rate, state_rate, county_rate, special_rates, tax_amount, total_amount) FROM STDIN (FORMAT BINARY)");
 
         using var reader = new StreamReader(stream);
         using var csv = new CsvReader(reader, config);
@@ -46,15 +66,9 @@ internal class DeliveryRepository(AppContext context) : IDeliveryRepository
         {
             csv.ReadHeader();
         }
-        
-        int batchSize = 15;
-        var batch = new List<Task<(bool IsSkip, Delivery Data)>>();
-        
-        int counter = 0;
+
         while (await csv.ReadAsync())
         {
-            counter++;
-            Console.WriteLine(counter);
             try
             {
                 double longitude = csv.GetField<double>("longitude");
@@ -66,13 +80,31 @@ internal class DeliveryRepository(AppContext context) : IDeliveryRepository
                     ? DateTime.SpecifyKind(parsed, DateTimeKind.Utc)
                     : DateTime.UtcNow;
                 
-                batch.Add(ValidateAndReturnData(new Delivery(){longitude = longitude, latitude = latitude, subtotal = subtotal, timestamp = timestamp}));
-                
-                if (batch.Count >= batchSize)
+                if (!GeoHelper.IsInNewYork(longitude, latitude))
                 {
-                    await ProcessBatch(batch, writer, cancellationToken);
-                    batch.Clear();
+                    continue;
                 }
+
+                bool isSpecial;
+
+                double composite_tax_rate = JurisdictionLookupService.GetJurisdiction(longitude, latitude, out isSpecial);
+                double special_rate = 0;
+                double county_rate = 0;
+
+                if (isSpecial)
+                {
+                    special_rate = 0.00375;
+                }
+
+                county_rate = composite_tax_rate - special_rate - 0.04;
+                double tax_amount = subtotal * composite_tax_rate;
+                double total_amount = subtotal + tax_amount;
+                
+                await writer.StartRowAsync();
+                await writer.WriteAsync(longitude, NpgsqlTypes.NpgsqlDbType.Double);
+                await writer.WriteAsync(latitude, NpgsqlTypes.NpgsqlDbType.Double);
+                await writer.WriteAsync(subtotal, NpgsqlTypes.NpgsqlDbType.Double);
+                await writer.WriteAsync(timestamp, NpgsqlTypes.NpgsqlDbType.TimestampTz);
             }
             catch (Exception ex)
             {
@@ -80,38 +112,12 @@ internal class DeliveryRepository(AppContext context) : IDeliveryRepository
                 throw;
             }
         }
-        
-        if (batch.Count > 0)
-        {
-            await ProcessBatch(batch, writer, cancellationToken);
-        }
-        
+
         await writer.CompleteAsync(cancellationToken);
     }
 
     public async Task<List<Delivery>> GetAllAsync(CancellationToken cancellationToken)
     {
         return await context.Deliveries.ToListAsync();
-    }
-    private static async Task<(bool IsSkip, Delivery Data)> ValidateAndReturnData(Delivery data)
-    {
-        bool isSkip = await AddressHelper.ValidateLocation(data.longitude, data.latitude);
-        return (isSkip, data);
-    }
-
-    private static async Task ProcessBatch(List<Task<(bool IsSkip, Delivery Data)>> batch, NpgsqlBinaryImporter writer, CancellationToken ct)
-    {
-        var results = await Task.WhenAll(batch);
-
-        foreach (var (isSkip, data) in results)
-        {
-            if (isSkip) continue;
-
-            await writer.StartRowAsync(ct);
-            await writer.WriteAsync(data.longitude, NpgsqlTypes.NpgsqlDbType.Double, ct);
-            await writer.WriteAsync(data.latitude, NpgsqlTypes.NpgsqlDbType.Double, ct);
-            await writer.WriteAsync(data.subtotal, NpgsqlTypes.NpgsqlDbType.Double, ct);
-            await writer.WriteAsync(data.timestamp, NpgsqlTypes.NpgsqlDbType.TimestampTz, ct);
-        }
     }
 }
