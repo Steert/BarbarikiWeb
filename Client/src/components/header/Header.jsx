@@ -1,4 +1,5 @@
 import React from "react";
+import header_logo from "../../assets/header-logo.png";
 import "./Header.css";
 
 const Header = () => {
@@ -6,7 +7,7 @@ const Header = () => {
     <div className="header-container">
         <div className="info">
           <div>
-            <img src="../src/assets/header-logo.png" alt="logo wellness kit image" className="logo" />
+            <img src={header_logo} alt="logo wellness kit image" className="logo" />
           </div>
           <div className="text-info">
             <p className="text">Instant</p>

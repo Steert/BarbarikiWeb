@@ -8,5 +8,5 @@ public interface IDeliveryService
     
     Task ImportAsync(Stream reader, CancellationToken cancellationToken = default);
     
-    Task<List<Delivery>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<PagedResponse<Delivery>> GetByPage(int pageNumber, int pageSize,CancellationToken cancellationToken = default);
 }

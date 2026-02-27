@@ -1,4 +1,4 @@
-﻿using BusinessLogic;
+using BusinessLogic;
 using DataAccess.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
@@ -34,10 +34,16 @@ public class DeliveryController(IDeliveryService deliveryService) : ControllerBa
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllAsync()
+    public async Task<ActionResult<PagedResponse<Delivery>>> GetOrders(
+        [FromQuery] int pageNumber = 1, 
+        [FromQuery] int pageSize = 10,
+        CancellationToken ct = default)
     {
-        var collection = await deliveryService.GetAllAsync();
-        return Ok(collection);
+        if (pageNumber < 1) pageNumber = 1;
+        if (pageSize > 100) pageSize = 100;
+
+        var result = await deliveryService.GetByPage(pageNumber, pageSize, ct);
+        return Ok(result);
     }
 
     [HttpGet("Tax")]

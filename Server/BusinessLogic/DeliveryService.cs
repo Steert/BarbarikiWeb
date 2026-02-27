@@ -16,8 +16,8 @@ internal class DeliveryService(IDeliveryRepository deliveryRepository) : IDelive
         await deliveryRepository.ImportAsync(stream, cancellationToken);
     }
 
-    public async Task<List<Delivery>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<PagedResponse<Delivery>> GetByPage(int pageNumber, int pageSize,CancellationToken cancellationToken = default)
     {
-        return await deliveryRepository.GetAllAsync(cancellationToken);
+        return await deliveryRepository.GetPagedAsync(pageNumber, pageSize, cancellationToken);
     }
 }
