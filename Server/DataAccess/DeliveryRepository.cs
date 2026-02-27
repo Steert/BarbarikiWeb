@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
+using DataAccess.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -25,8 +26,36 @@ public class PagedResponse<T>
 
 internal class DeliveryRepository(AppContext context) : IDeliveryRepository
 {
-    public async Task CreateAsync(Delivery delivery, CancellationToken cancellationToken)
+    public async Task CreateAsync(double longitude, double latitude, double subtotal,
+        CancellationToken cancellationToken)
     {
+        bool isSpecial;
+
+        double composite_tax_rate = JurisdictionLookupService.GetJurisdiction(longitude, latitude, out isSpecial);
+        double special_rate = 0;
+        double county_rate = 0;
+
+        if (isSpecial)
+        {
+            special_rate = 0.00375;
+        }
+
+        county_rate = composite_tax_rate - special_rate - 0.04;
+        double tax_amount = subtotal * composite_tax_rate;
+        double total_amount = subtotal + tax_amount;
+        
+        var delivery = new Delivery
+        {
+            longitude = longitude,
+            latitude = latitude,
+            timestamp = DateTime.UtcNow,
+            subtotal = subtotal,
+            composite_tax_rate = composite_tax_rate,
+            county_rate = county_rate,
+            special_rates =  special_rate,
+            tax_amount = tax_amount,
+            total_amount = total_amount,
+        };
         await context.Deliveries.AddAsync(delivery, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
     }
@@ -45,7 +74,7 @@ internal class DeliveryRepository(AppContext context) : IDeliveryRepository
         await connection.OpenAsync(cancellationToken);
 
         using var writer = connection.BeginBinaryImport(
-            "COPY \"Deliveries\" (longitude, latitude, subtotal, timestamp) FROM STDIN (FORMAT BINARY)");
+            "COPY \"Deliveries\" (longitude, latitude, subtotal, timestamp, composite_tax_rate, state_rate, county_rate, special_rates, tax_amount, total_amount) FROM STDIN (FORMAT BINARY)");
 
         using var reader = new StreamReader(stream);
         using var csv = new CsvReader(reader, config);
@@ -67,12 +96,32 @@ internal class DeliveryRepository(AppContext context) : IDeliveryRepository
                 DateTime timestamp = DateTime.TryParse(rawTime, CultureInfo.InvariantCulture, out var parsed)
                     ? DateTime.SpecifyKind(parsed, DateTimeKind.Utc)
                     : DateTime.UtcNow;
+                
+                if (!GeoHelper.IsInNewYork(longitude, latitude))
+                {
+                    continue;
+                }
 
-                await writer.StartRowAsync(cancellationToken);
-                await writer.WriteAsync(longitude, NpgsqlTypes.NpgsqlDbType.Double, cancellationToken);
-                await writer.WriteAsync(latitude, NpgsqlTypes.NpgsqlDbType.Double, cancellationToken);
-                await writer.WriteAsync(subtotal, NpgsqlTypes.NpgsqlDbType.Double, cancellationToken);
-                await writer.WriteAsync(timestamp, NpgsqlTypes.NpgsqlDbType.TimestampTz, cancellationToken);
+                bool isSpecial;
+
+                double composite_tax_rate = JurisdictionLookupService.GetJurisdiction(longitude, latitude, out isSpecial);
+                double special_rate = 0;
+                double county_rate = 0;
+
+                if (isSpecial)
+                {
+                    special_rate = 0.00375;
+                }
+
+                county_rate = composite_tax_rate - special_rate - 0.04;
+                double tax_amount = subtotal * composite_tax_rate;
+                double total_amount = subtotal + tax_amount;
+                
+                await writer.StartRowAsync();
+                await writer.WriteAsync(longitude, NpgsqlTypes.NpgsqlDbType.Double);
+                await writer.WriteAsync(latitude, NpgsqlTypes.NpgsqlDbType.Double);
+                await writer.WriteAsync(subtotal, NpgsqlTypes.NpgsqlDbType.Double);
+                await writer.WriteAsync(timestamp, NpgsqlTypes.NpgsqlDbType.TimestampTz);
             }
             catch (Exception ex)
             {

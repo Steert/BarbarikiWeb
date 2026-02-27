@@ -1,6 +1,7 @@
-﻿using BusinessLogic;
-using DataAccess;
+using BusinessLogic;
+using DataAccess.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using RestSharp;
 
 namespace WebApi.Controllers;
 
@@ -25,7 +26,7 @@ public class DeliveryController(IDeliveryService deliveryService) : ControllerBa
 
         if (!file.FileName.EndsWith(".csv"))
             return BadRequest("Invalid file format");
-        
+
         using Stream stream = file.OpenReadStream();
         await deliveryService.ImportAsync(stream);
 
@@ -43,5 +44,13 @@ public class DeliveryController(IDeliveryService deliveryService) : ControllerBa
 
         var result = await deliveryService.GetByPage(pageNumber, pageSize, ct);
         return Ok(result);
+    }
+
+    [HttpGet("Tax")]
+    public async Task<bool> GetTax(double longitude, double latitude)
+    {
+        bool okay = false;
+        JurisdictionLookupService.GetJurisdiction(longitude, latitude, out okay);
+        return okay;
     }
 }

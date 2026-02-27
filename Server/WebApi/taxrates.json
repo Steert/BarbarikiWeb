@@ -1,0 +1,330 @@
+﻿[
+  {
+    "County": "Albany",
+    "Rate": 0.08
+  },
+  {
+    "County": "Allegany",
+    "Rate": 0.085
+  },
+  {
+    "County": "Broome",
+    "Rate": 0.08
+  },
+  {
+    "County": "Cattaraugus",
+    "Rate": 0.08
+  },
+  {
+    "County": "Olean",
+    "Rate": 0.08
+  },
+  {
+    "County": "Salamanca",
+    "Rate": 0.08
+  },
+  {
+    "County": "Cayuga",
+    "Rate": 0.08
+  },
+  {
+    "County": "Auburn",
+    "Rate": 0.08
+  },
+  {
+    "County": "Chautauqua",
+    "Rate": 0.08
+  },
+  {
+    "County": "Chemung",
+    "Rate": 0.08
+  },
+  {
+    "County": "Chenango",
+    "Rate": 0.08
+  },
+  {
+    "County": "Norwich",
+    "Rate": 0.08
+  },
+  {
+    "County": "Clinton",
+    "Rate": 0.08
+  },
+  {
+    "County": "Columbia",
+    "Rate": 0.08
+  },
+  {
+    "County": "Cortland",
+    "Rate": 0.08
+  },
+  {
+    "County": "Delaware",
+    "Rate": 0.08
+  },
+  {
+    "County": "*Dutchess",
+    "Rate": 0.08125
+  },
+  {
+    "County": "Erie",
+    "Rate": 0.0875
+  },
+  {
+    "County": "Essex",
+    "Rate": 0.08
+  },
+  {
+    "County": "Franklin",
+    "Rate": 0.08
+  },
+  {
+    "County": "Fulton",
+    "Rate": 0.08
+  },
+  {
+    "County": "Gloversville",
+    "Rate": 0.08
+  },
+  {
+    "County": "Johnstown",
+    "Rate": 0.08
+  },
+  {
+    "County": "Genesee",
+    "Rate": 0.08
+  },
+  {
+    "County": "Greene",
+    "Rate": 0.08
+  },
+  {
+    "County": "Hamilton",
+    "Rate": 0.08
+  },
+  {
+    "County": "Herkimer",
+    "Rate": 0.0825
+  },
+  {
+    "County": "Jefferson",
+    "Rate": 0.08
+  },
+  {
+    "County": "Lewis",
+    "Rate": 0.08
+  },
+  {
+    "County": "Livingston",
+    "Rate": 0.08
+  },
+  {
+    "County": "Madison",
+    "Rate": 0.08
+  },
+  {
+    "County": "Oneida",
+    "Rate": 0.08
+  },
+  {
+    "County": "Monroe",
+    "Rate": 0.08
+  },
+  {
+    "County": "Montgomery",
+    "Rate": 0.08
+  },
+  {
+    "County": "*Nassau",
+    "Rate": 0.08625
+  },
+  {
+    "County": "*New York City",
+    "Rate": 0.08875
+  },
+  {
+    "County": "Niagara",
+    "Rate": 0.08
+  },
+  {
+    "County": "Oneida",
+    "Rate": 0.0875
+  },
+  {
+    "County": "Rome",
+    "Rate": 0.0875
+  },
+  {
+    "County": "Utica",
+    "Rate": 0.0875
+  },
+  {
+    "County": "Onondaga",
+    "Rate": 0.08
+  },
+  {
+    "County": "Ontario",
+    "Rate": 0.075
+  },
+  {
+    "County": "*Orange",
+    "Rate": 0.08125
+  },
+  {
+    "County": "Orleans",
+    "Rate": 0.08
+  },
+  {
+    "County": "Oswego",
+    "Rate": 0.08
+  },
+  {
+    "County": "Oswego",
+    "Rate": 0.08
+  },
+  {
+    "County": "Otsego",
+    "Rate": 0.08
+  },
+  {
+    "County": "*Putnam",
+    "Rate": 0.08375
+  },
+  {
+    "County": "Rensselaer",
+    "Rate": 0.08
+  },
+  {
+    "County": "*Rockland",
+    "Rate": 0.08375
+  },
+  {
+    "County": "*Queens",
+    "Rate": 0.08875
+  },
+  {
+    "County": "*Richmond",
+    "Rate": 0.08875
+  },
+  {
+    "County": "*Bronx",
+    "Rate": 0.08875
+  },
+  {
+    "County": "*Kings",
+    "Rate": 0.08875
+  },
+  {
+    "County": "*Manhattan",
+    "Rate": 0.08875
+  },
+  {
+    "County": "*Brooklyn",
+    "Rate": 0.08875
+  },
+  {
+    "County": "St. Lawrence",
+    "Rate": 0.08
+  },
+  {
+    "County": "Ogdensburg",
+    "Rate": 0.08
+  },
+  {
+    "County": "Saratoga",
+    "Rate": 0.07
+  },
+  {
+    "County": "Saratoga Springs",
+    "Rate": 0.07
+  },
+  {
+    "County": "Schenectady",
+    "Rate": 0.08
+  },
+  {
+    "County": "Schoharie",
+    "Rate": 0.08
+  },
+  {
+    "County": "Schuyler",
+    "Rate": 0.08
+  },
+  {
+    "County": "Seneca",
+    "Rate": 0.08
+  },
+  {
+    "County": "Steuben",
+    "Rate": 0.08
+  },
+  {
+    "County": "*Suffolk",
+    "Rate": 0.0875
+  },
+  {
+    "County": "Sullivan",
+    "Rate": 0.08
+  },
+  {
+    "County": "Tioga",
+    "Rate": 0.08
+  },
+  {
+    "County": "Tompkins",
+    "Rate": 0.08
+  },
+  {
+    "County": "Ithaca",
+    "Rate": 0.08
+  },
+  {
+    "County": "Ulster",
+    "Rate": 0.08
+  },
+  {
+    "County": "Warren",
+    "Rate": 0.07
+  },
+  {
+    "County": "Glens Falls",
+    "Rate": 0.07
+  },
+  {
+    "County": "Washington",
+    "Rate": 0.07
+  },
+  {
+    "County": "Wayne",
+    "Rate": 0.08
+  },
+  {
+    "County": "*Westchester",
+    "Rate": 0.08375
+  },
+  {
+    "County": "*Mount Vernon",
+    "Rate": 0.08375
+  },
+  {
+    "County": "*New Rochelle",
+    "Rate": 0.08375
+  },
+  {
+    "County": "*White Plains",
+    "Rate": 0.08375
+  },
+  {
+    "County": "*Yonkers",
+    "Rate": 0.08875
+  },
+  {
+    "County": "Wyoming",
+    "Rate": 0.08
+  },
+  {
+    "County": "Yates",
+    "Rate": 0.08
+  }
+]

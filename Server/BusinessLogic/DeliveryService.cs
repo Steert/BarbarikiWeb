@@ -8,14 +8,7 @@ internal class DeliveryService(IDeliveryRepository deliveryRepository) : IDelive
     public async Task CreateAsync(double longitude, double latitude, double subtotal,
         CancellationToken cancellationToken = default)
     {
-        var delivery = new Delivery
-        {
-            longitude = longitude,
-            latitude = latitude,
-            timestamp = DateTime.UtcNow,
-            subtotal = subtotal,
-        };
-        await deliveryRepository.CreateAsync(delivery, cancellationToken);
+        await deliveryRepository.CreateAsync(longitude, latitude, subtotal, cancellationToken);
     }
 
     public async Task ImportAsync(Stream stream, CancellationToken cancellationToken = default)
