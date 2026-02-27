@@ -1,7 +1,7 @@
 using BusinessLogic;
+using DataAccess;
 using DataAccess.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using RestSharp;
 
 namespace WebApi.Controllers;
 
