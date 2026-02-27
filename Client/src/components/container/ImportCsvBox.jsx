@@ -39,7 +39,7 @@ const ImportCsvBox = () => {
         <p style={{ color: "#64748b", fontSize: "14px" }}>
           {fileName
             ? "Selected file:"
-            : "Drop your CSV file here or click to browse"}
+            : "Сlick to browse"}
         </p>
         {fileName && (
           <div className="file-name-box">
