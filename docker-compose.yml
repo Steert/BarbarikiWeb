@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:17
+    container_name: barbariki-db
+    restart: always
+    environment:
+      POSTGRES_USER: u97l6ri1th8o6f
+      POSTGRES_PASSWORD: pb74adf7582004f6586d34d219340f1d461a286eb888e03d8dec503c354005a3b
+      POSTGRES_DB: d7vt9376nlp65q
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./Server
+      dockerfile: Dockerfile
+    container_name: barbariki-server
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=${DATABASE_STRING_KEY}
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+  frontend:
+    build:
+      context: ./Client
+      dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=${VITE_API_URL}
+        - VITE_MAP_BOX_TOKEN=${VITE_MAP_BOX_TOKEN}
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
