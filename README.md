@@ -12,10 +12,10 @@ POSTGRES_PASSWORD=your_secure_password
 POSTGRES_DB=d7vt9376nlp65q
 
 ##### Backend Connection String
-DATABASE_STRING_KEY=Host=db;Database=d7vt9376nlp65q;Username=u97l6ri1th8o6f;Password=your_secure_password
+DATABASE_STRING_KEY=Host=db;Database=d7vt9376nlp65q;Username=u97l6ri1th8o6f;Password=pb74adf7582004f6586d34d219340f1d461a286eb888e03d8dec503c354005a3b
 
 ##### Frontend Build Arguments
 VITE_API_URL=http://localhost:5000/orders
-VITE_MAP_BOX_TOKEN=your_mapbox_token_here
+VITE_MAP_BOX_TOKEN=pk.eyJ1IjoiYmFyYmFyaWsiLCJhIjoiY21tMm50enEzMDI1MTJxcXdsNGZvZmEyMCJ9.GXC7_CJ02EFSGgk2ZL7Azw
 
 Descriptions: why we use cloud database - we thought we could deploy the app but we didn't have enough time for this. 
