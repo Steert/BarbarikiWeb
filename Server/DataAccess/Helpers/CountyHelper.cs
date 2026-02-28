@@ -6,12 +6,12 @@ using NetTopologySuite.IO;
 
 namespace DataAccess.Helpers;
 
-public class JurisdictionLookupService
+public class CountyHerlper
 {
     private static readonly List<(IPreparedGeometry Boundary, TaxRateData Data)> jurisdictions;
-    private const string Path = "NYC.geojson";
+    private const string Path = "Appdata/NewYorkCounties.geojson";
 
-    static JurisdictionLookupService()
+    static CountyHerlper()
     {
         var reader = new GeoJsonReader();
         var featureCollection = reader.Read<FeatureCollection>(File.ReadAllText(Path));
@@ -31,9 +31,10 @@ public class JurisdictionLookupService
         }
     }
 
-    public static double GetJurisdiction(double lon, double lat, out bool isSpecial)
+    public static double GetCounty(double lon, double lat, out bool isSpecial)
     {
         var point = new Point(lon, lat);
+        
         isSpecial = jurisdictions.FirstOrDefault(j => j.Boundary.Contains(point)).Data.County.Contains("*");
         return jurisdictions.FirstOrDefault(j => j.Boundary.Contains(point)).Data.Rate;
     }

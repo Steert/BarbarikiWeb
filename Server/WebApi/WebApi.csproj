@@ -25,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="gz_2010_us_040_00_500k.json" />
+      <None Include="Appdata\USAStatesPolygons.json" />
     </ItemGroup>
 
 </Project>

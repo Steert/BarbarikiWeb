@@ -45,12 +45,4 @@ public class DeliveryController(IDeliveryService deliveryService) : ControllerBa
         var result = await deliveryService.GetByPage(pageNumber, pageSize, ct);
         return Ok(result);
     }
-
-    [HttpGet("Tax")]
-    public async Task<bool> GetTax(double longitude, double latitude)
-    {
-        bool okay = false;
-        JurisdictionLookupService.GetJurisdiction(longitude, latitude, out okay);
-        return okay;
-    }
 }
