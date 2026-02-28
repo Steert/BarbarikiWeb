@@ -4,9 +4,9 @@ services:
     container_name: barbariki-db
     restart: always
     environment:
-      POSTGRES_USER: u97l6ri1th8o6f
-      POSTGRES_PASSWORD: pb74adf7582004f6586d34d219340f1d461a286eb888e03d8dec503c354005a3b
-      POSTGRES_DB: d7vt9376nlp65q
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
       - "5432:5432"
     volumes:
