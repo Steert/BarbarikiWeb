@@ -4,6 +4,8 @@ using dotenv.net;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Console.WriteLine(Environment.GetEnvironmentVariable("DATABASE_STRING_KEY"));
+
 DotEnv.Load(options: new DotEnvOptions(probeForEnv: true, probeLevelsToSearch: 4));
 
 builder.Services.AddDataAccess(builder.Configuration, Environment.GetEnvironmentVariable("DATABASE_STRING_KEY"));
@@ -14,7 +16,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("ReactCors", policy =>
     {
         policy
-            .WithOrigins("http://localhost:5173")
+            .WithOrigins("http://localhost:8080")
             .AllowAnyHeader()
             .AllowAnyMethod();
     });

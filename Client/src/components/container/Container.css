@@ -169,6 +169,14 @@ input::placeholder {
     margin: 0px;
 }
 
+.text-loading{
+    color: #94a3b8;
+    font-weight: bold;
+    font-size: 24px;
+    font-family: 'Arial', sans-serif;
+    margin: 0px;
+}
+
 
 @media (max-width: 768px) {
   .row {

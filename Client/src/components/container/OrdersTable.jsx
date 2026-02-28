@@ -5,6 +5,7 @@ import { FaMedkit } from "react-icons/fa";
 
 function OrdersTable() {
   const [page, setPage] = useState(1);
+  const [inputPage, setInputPage] = useState(1);
   const [orders, setOrders] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,11 +31,22 @@ function OrdersTable() {
     return () => window.removeEventListener("refresh-orders", handleRefresh);
   }, [page]);
 
-  const onChangePage = (newPage) => {
-    const parsedPage = Number(newPage);
-    if (!parsedPage || parsedPage < 1) return setPage(1);
-    if (totalPages > 0 && parsedPage > totalPages) return setPage(totalPages);
-    setPage(parsedPage);
+  useEffect(() => {
+    setInputPage(page);
+  }, [page]);
+
+  const handleInputChange = (e) => {
+    const val = e.target.value;
+    setInputPage(val);
+
+    const parsedPage = Number(val);
+    if (parsedPage && parsedPage > 0) {
+      if (totalPages > 0 && parsedPage > totalPages) {
+        setPage(totalPages);
+      } else {
+        setPage(parsedPage);
+      }
+    }
   };
 
   if (isLoading && orders.length === 0) {
@@ -81,7 +93,7 @@ function OrdersTable() {
               <tr key={order.id}>
                 <td>{order.latitude}</td>
                 <td>{order.longitude}</td>
-                <td>{order.composite_tax_rate}%</td>
+                <td>{order.composite_tax_rate}</td>
                 <td>{order.state_rate}</td>
                 <td>{order.county_rate}</td>
                 <td>{order.special_rates}</td>
@@ -121,8 +133,9 @@ function OrdersTable() {
           <input
             className="page-jump-input"
             type="number"
-            value={page}
-            onChange={(e) => onChangePage(e.target.value)}
+            value={inputPage}
+            onChange={handleInputChange}
+            onBlur={() => setInputPage(page)}
           />
         </div>
       </div>

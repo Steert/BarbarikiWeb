@@ -16,6 +16,7 @@ const ManualOrderForm = () => {
   const [isCorrectLatitude, setIsCorrectLatitude] = useState(true);
   const [isCorrectLongitude, setIsCorrectLongitude] = useState(true);
   const [isCorrectSubtotal, setIsCorrectSubtotal] = useState(true);
+  const [isLoading, setIsLoading] = useState();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -40,6 +41,9 @@ const ManualOrderForm = () => {
     isCorrectSubtotal;
 
   const handleCreateOrder = async (event) => {
+
+    setIsLoading(true);
+
     event.preventDefault();
     const lat = parseFloat(formData.latitude);
     const lon = parseFloat(formData.longitude);
@@ -60,8 +64,19 @@ const ManualOrderForm = () => {
         "Delivery Error",
         error.message || "Error during location validation.",
       );
+    } finally {
+      setIsLoading(false);
     }
+
   };
+
+  if (isLoading) {
+    return (
+      <div className="content">
+        <h2 className="text-loading">Loading...</h2>
+      </div>
+    );
+  }
 
   return (
     <div className="content">
