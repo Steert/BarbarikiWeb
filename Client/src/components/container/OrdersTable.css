@@ -1,7 +1,9 @@
 table {
   background-color: #accbf1;
+  min-width: 100%;
   margin: 0 0 20px 0;
   padding: 10px;
+  table-layout: fixed;
   border-radius: 10px;
   box-shadow:
     0 1px 3px 0 rgba(0, 0, 0, 0.1),
@@ -26,6 +28,9 @@ th {
     0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px -1px rgba(0, 0, 0, 0.1),
     0 10px 15px -3px rgba(0, 0, 0, 0.05);
+  width: auto;
+  font-weight: bold;
+  font-family: "Arial", sans-serif;
 }
 
 td {
@@ -36,7 +41,15 @@ td {
     0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px -1px rgba(0, 0, 0, 0.1),
     0 10px 15px -3px rgba(0, 0, 0, 0.05);
-  width: 33%;
+  width: auto;
+  text-align: center;
+  font-weight: bold;
+  font-family: "Arial", sans-serif;
+  color: #86a6cd;
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-all;
+  line-height: 1.4;
 }
 
 tr:hover td {
@@ -169,12 +182,11 @@ tr:hover td {
   background-color: #0056b3;
 }
 
-.medkit-icon{
+.medkit-icon {
   width: 20px;
   height: 20px;
   color: red;
 }
-
 
 .loader-container {
   width: 100%;
@@ -189,14 +201,13 @@ tr:hover td {
   color: #475569;
 }
 
-
 .spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid #d6e5f6; 
+  border: 4px solid #d6e5f6;
   border-top: 4px solid #007bff;
   border-radius: 50%;
-  animation: spin 1s linear infinite; 
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
@@ -205,5 +216,38 @@ tr:hover td {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+@media (max-width: 1024px) {
+  .table-responsive {
+    display: block;
+    width: 100%;
+    max-width: calc(100vw - 40px); 
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 20px;
+  }
+
+  table {
+    table-layout: fixed !important;
+    width: 1200px !important;
+    min-width: 1200px !important;
+  }
+
+  .pagination-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+    width: 100%;
+    max-width: calc(100vw - 60px); 
+    box-sizing: border-box;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .pagination-controls, .page-jump-box {
+    width: 100% !important;
+    margin: 0;
+    box-sizing: border-box;
   }
 }

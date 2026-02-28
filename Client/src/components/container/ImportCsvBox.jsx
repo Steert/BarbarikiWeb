@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { MdDeleteForever } from "react-icons/md";
 import { importCsvFile } from "../../services/api";
 import { showSuccess, showError } from "../../utils/Alerts";
+import { refreshOrdersEvent } from "../../utils/events";
 
 const ImportCsvBox = () => {
   const [fileName, setFileName] = useState("");
@@ -24,7 +25,11 @@ const ImportCsvBox = () => {
 
     try {
       await importCsvFile(file);
+
+      refreshOrdersEvent();
+
       handleResetFile();
+
       showSuccess("Successfully imported!");
     } catch (error) {
       console.error(error);
@@ -36,7 +41,7 @@ const ImportCsvBox = () => {
     <div className="content">
       <h2 className="content-text">Import CSV</h2>
       <div className="import-box">
-        <p style={{ color: "#64748b", fontSize: "14px" }}>
+        <p style={{ color: "#64748b", fontSize: "14px", fontFamily: "Arial", fontWeight: "normal"  }}>
           {fileName
             ? "Selected file:"
             : "Сlick to browse"}

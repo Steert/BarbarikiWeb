@@ -5,6 +5,7 @@ import {
   checkIsNotWater,
 } from "../../services/api";
 import { showSuccess, showError } from "../../utils/Alerts";
+import { refreshOrdersEvent } from "../../utils/events";
 
 const ManualOrderForm = () => {
   const [formData, setFormData] = useState({
@@ -48,6 +49,8 @@ const ManualOrderForm = () => {
       await checkIsNewYork(lat, lon);
       await checkIsNotWater(lat, lon);
       await createOrderApi({ latitude: lat, longitude: lon, subtotal });
+
+      refreshOrdersEvent();
 
       setFormData({ latitude: "", longitude: "", subtotal: "" });
       showSuccess("Success!", "Order created!");
