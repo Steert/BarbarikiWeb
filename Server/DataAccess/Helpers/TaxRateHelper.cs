@@ -4,7 +4,7 @@ namespace DataAccess.Helpers;
 
 public class TaxRateHelper
 {
-    private const string Path = "taxrates.json";
+    private const string Path = "Appdata/TaxRates.json";
 
     public static List<TaxRateData> taxRates;
 
@@ -13,6 +13,7 @@ public class TaxRateHelper
         string jsonContent = File.ReadAllText(Path);
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         var rateList = JsonSerializer.Deserialize<List<TaxRateData>>(jsonContent, options);
+        
         taxRates = rateList;
     }
 }

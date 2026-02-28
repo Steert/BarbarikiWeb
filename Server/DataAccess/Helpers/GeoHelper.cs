@@ -9,11 +9,12 @@ public class GeoHelper
 {
     private static readonly Geometry nyBoundary;
 
-    private const string Path = "gz_2010_us_040_00_500k.json";
+    private const string Path = "Appdata/USAStatesPolygons.json";
 
     static GeoHelper()
     {
         var serializer = GeoJsonSerializer.Create();
+        
         using (var streamReader = new StreamReader(Path))
         using (var jsonReader = new JsonTextReader(streamReader))
         {
