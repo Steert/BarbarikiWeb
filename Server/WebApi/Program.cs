@@ -4,6 +4,8 @@ using dotenv.net;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Console.WriteLine(Environment.GetEnvironmentVariable("DATABASE_STRING_KEY"));
+
 DotEnv.Load(options: new DotEnvOptions(probeForEnv: true, probeLevelsToSearch: 4));
 
 builder.Services.AddDataAccess(builder.Configuration, Environment.GetEnvironmentVariable("DATABASE_STRING_KEY"));

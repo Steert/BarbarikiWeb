@@ -5,6 +5,7 @@ import {
   checkIsNotWater,
 } from "../../services/api";
 import { showSuccess, showError } from "../../utils/Alerts";
+import { refreshOrdersEvent } from "../../utils/events";
 
 const ManualOrderForm = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ const ManualOrderForm = () => {
   const [isCorrectLatitude, setIsCorrectLatitude] = useState(true);
   const [isCorrectLongitude, setIsCorrectLongitude] = useState(true);
   const [isCorrectSubtotal, setIsCorrectSubtotal] = useState(true);
+  const [isLoading, setIsLoading] = useState();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -39,6 +41,9 @@ const ManualOrderForm = () => {
     isCorrectSubtotal;
 
   const handleCreateOrder = async (event) => {
+
+    setIsLoading(true);
+
     event.preventDefault();
     const lat = parseFloat(formData.latitude);
     const lon = parseFloat(formData.longitude);
@@ -49,6 +54,8 @@ const ManualOrderForm = () => {
       await checkIsNotWater(lat, lon);
       await createOrderApi({ latitude: lat, longitude: lon, subtotal });
 
+      refreshOrdersEvent();
+
       setFormData({ latitude: "", longitude: "", subtotal: "" });
       showSuccess("Success!", "Order created!");
     } catch (error) {
@@ -57,8 +64,19 @@ const ManualOrderForm = () => {
         "Delivery Error",
         error.message || "Error during location validation.",
       );
+    } finally {
+      setIsLoading(false);
     }
+
   };
+
+  if (isLoading) {
+    return (
+      <div className="content">
+        <h2 className="text-loading">Loading...</h2>
+      </div>
+    );
+  }
 
   return (
     <div className="content">
