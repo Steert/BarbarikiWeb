@@ -16,7 +16,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("ReactCors", policy =>
     {
         policy
-            .WithOrigins("http://localhost:8080")
+            .WithOrigins("http://localhost:3000")
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
@@ -25,6 +25,7 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 app.UseCors("ReactCors");
+app.UseCors("AllowReactApp");
 app.MapControllers();
 app.UseSwagger();
 app.UseSwaggerUI();
